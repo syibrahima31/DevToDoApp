@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container-fluid py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9 col-xl-7">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">To Do App</h4>
+
+                            <form action="{{url_for('bp.traitement')}}" method="POST" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="text" id="form1" name="title" class="form-control"/>
+                                        <label class="form-label" for="form1">Enter a task here</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" name="action" value="save" class="btn btn-primary">Save</button>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" name="action"  value="get" class="btn btn-warning">Get tasks</button>
+                                </div>
+                            </form>
+
+                            <table class="table mb-4">
+                                <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Todo item</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for tache  in taches %}
+                                    <tr>
+                                        <th scope="row">{{tache.id}}</th>
+                                        <td>{{tache.title}}</td>
+                                        <td>{{tache.date}}</td>
+                                        {% if tache.complete %}
+                                            <td class="text-success">COMPLETED</td>
+                                        {% else %}
+                                            <td>IN PROGRESS</td>
+
+                                        {% endif %}
+
+                                        <td>
+                                            <a href="{{url_for('bp.update', id=tache.id)}}" class="btn btn-primary">Finished</a>
+                                            <a href="{{url_for('bp.delete', id=tache.id)}}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
